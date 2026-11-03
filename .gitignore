@@ -1,0 +1,41 @@
+# Local credentials: only the empty example is publishable.
+.env
+.env.*
+!.env.example
+**/secrets/
+**/*secret*.json
+**/*.pem
+**/*.key
+
+# Local runtimes, caches, databases and test output.
+**/.venv/
+**/venv/
+**/__pycache__/
+**/*.py[cod]
+**/.pytest_cache/
+**/.tmp/
+**/.cache/
+**/node_modules/
+**/*.sqlite3
+**/*.sqlite3-*
+**/*.sqlite
+**/*.sqlite-*
+**/*.db
+**/*.db-*
+**/qa/
+frontend/tests/results/
+frontend/testresult.json
+**/junit*.xml
+**/*.log
+**/*.tap
+.coverage
+htmlcov/
+
+# Editors and generated bundles.
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+*.zip
+*.tar
+*.tar.gz
