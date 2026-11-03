@@ -1,0 +1,9 @@
+{
+  "name": "eduproject-frontend",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test tests/*.test.js",
+    "check": "node tests/run-checks.mjs"
+  }
+}
