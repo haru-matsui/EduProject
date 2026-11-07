@@ -1,0 +1,370 @@
+{
+  "project": "EduProject",
+  "sprint": 1,
+  "verified_on": "2026-11-01",
+  "timezone": "Asia/Yekaterinburg",
+  "scope": "Automated local checks, separately labelled synthetic UI QA, and real public Chrome core-flow QA; full independent AC acceptance pending",
+  "automated_checks": {
+    "started_at_utc": "2026-10-30T19:22:23.005985+05:00",
+    "finished_at_utc": "2026-10-30T19:23:05.387148+05:00",
+    "checks": [
+      {
+        "name": "backend",
+        "exit_code": 0
+      },
+      {
+        "name": "infrastructure-tests",
+        "exit_code": 0
+      },
+      {
+        "name": "yaml-structure",
+        "exit_code": 0
+      },
+      {
+        "name": "compose-config",
+        "exit_code": 0
+      },
+      {
+        "name": "syntax-app",
+        "exit_code": 0
+      },
+      {
+        "name": "syntax-api",
+        "exit_code": 0
+      },
+      {
+        "name": "frontend-tests",
+        "exit_code": 0
+      },
+      {
+        "name": "frontend-http",
+        "exit_code": 0
+      }
+    ],
+    "backend": {
+      "started_at_utc": "2026-10-30T19:22:26.789443+05:00",
+      "finished_at_utc": "2026-10-30T19:22:53.875939+05:00",
+      "python": "3.12.14",
+      "pytest_exit_code": 0,
+      "counts": {
+        "tests": 63,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "passed": 63
+      },
+      "postgresql": {
+        "requested": true,
+        "exercised": true,
+        "container_created": true,
+        "container_removed": true,
+        "docker_server_version": "29.7.2"
+      },
+      "telegram_real_e2e": "pending_client_credentials_and_registered_https_callback",
+      "oidc_unit_integration": "signed_fixture_jwt_and_mocked_official_jwks_token_endpoints",
+      "runtime_test_login": false,
+      "verification_status": "passed",
+      "helper_exit_code": 0
+    },
+    "all_commands_succeeded": true,
+    "verification_status": "passed",
+    "real_telegram_e2e": "pending",
+    "docker_image_build": "not_run_by_combined_helper",
+    "deployment": "not_run",
+    "visual_browser_check": "not_run",
+    "backend_evidence_directory": "backend\\qa\\combined-20261030T142223Z-450a3101"
+  },
+  "local_compose": {
+    "status": "healthy",
+    "docker_server_version": "29.7.2",
+    "image": "eduproject-app",
+    "image_id": "sha256:a36568a6ee537653f14807dd4125ebb76f5737671442da8e80b7168f0e72fb8c",
+    "services": {
+      "app": "healthy",
+      "db": "healthy"
+    },
+    "persistent_volume": "eduproject_eduproject_pgdata",
+    "public_origin": "https://2ctzfj-ip-81-90-20-56.tunnelmole.net",
+    "database_host_port_published": false,
+    "origin_kind": "temporary_https_tunnel",
+    "verified_at_utc": "2026-11-01T18:07:18.389947+00:00",
+    "public_origin_status": "disconnected_temporary_tunnel",
+    "served_app_js_matches_source": true,
+    "served_app_js_sha256": "a1357118eee64c1ed81c05379a81f7a7d3193eb2bdd101e99de2b7dbfdd64073"
+  },
+  "http_checks": [
+    {
+      "path": "/health/live",
+      "status": 200,
+      "body": {
+        "status": "ok"
+      }
+    },
+    {
+      "path": "/health/ready",
+      "status": 200,
+      "body": {
+        "status": "ready"
+      }
+    },
+    {
+      "path": "/api/v1/auth/configuration",
+      "status": 200,
+      "body": {
+        "telegram_login_configured": false
+      }
+    },
+    {
+      "path": "/api/v1/projects",
+      "status": 401,
+      "expected": "anonymous access denied"
+    },
+    {
+      "path": "/login",
+      "status": 200
+    }
+  ],
+  "browser_check": {
+    "page": "http://localhost:8000/login",
+    "telegram_unconfigured_message": true,
+    "console_errors": 0,
+    "screenshot": "qa/runtime-20261030/login-desktop.jpg",
+    "authenticated_pages": "pending_real_telegram_login",
+    "recorded_on": "2026-10-30"
+  },
+  "fixed_defects": [
+    {
+      "summary": "Numeric-string due_at accepted as Unix timestamp",
+      "files": [
+        "backend/app/schemas.py",
+        "backend/tests/test_sprint_flow.py"
+      ],
+      "result": "422 without project/task creation; valid Z and explicit timezone offset preserved",
+      "targeted_tests_passed": 13
+    },
+    {
+      "id": "OIDC-DECIMAL-PROFILE-ID",
+      "summary": "Numeric profile ID string rejected after verified Telegram login",
+      "files": [
+        "backend/app/oidc.py",
+        "backend/app/auth.py",
+        "backend/tests/test_oidc.py"
+      ],
+      "result": "Canonical ASCII decimal strings normalize to signed BIGINT; invalid IDs rejected; issuer/sub identity unchanged",
+      "backend_tests_passed": 97,
+      "real_login_retest": "passed"
+    }
+  ],
+  "pending": [
+    "Planning Poker and required meetings by the real team",
+    "Independent acceptance of every selected AC, Review and retrospective",
+    "Public-browser negative check for the revoked invitation on an active stand",
+    "Manual mobile/keyboard, ETag conflict, large dataset and fresh-machine checks",
+    "GitHub repository publication and actual CI/CD runs (publication still prohibited)",
+    "Persistent hosting; the temporary Tunnelmole address is now disconnected"
+  ],
+  "publication": {
+    "commits": false,
+    "push": false,
+    "remote_source_publication": false
+  },
+  "automated_checks_recorded_on": "2026-10-30",
+  "http_checks_recorded_on": "2026-10-30",
+  "latest_backend_verification": {
+    "started_at_utc": "2026-10-31T17:36:24.096996+05:00",
+    "finished_at_utc": "2026-10-31T17:36:43.720956+05:00",
+    "python": "3.12.14",
+    "pytest_exit_code": 0,
+    "counts": {
+      "tests": 97,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 97
+    },
+    "postgresql": {
+      "requested": true,
+      "exercised": true,
+      "container_created": true,
+      "container_removed": true,
+      "docker_server_version": "29.7.2"
+    },
+    "telegram_real_e2e": "Not exercised by automated helper; see real_telegram_login",
+    "oidc_unit_integration": "signed_fixture_jwt_and_mocked_official_jwks_token_endpoints",
+    "runtime_test_login": false,
+    "verification_status": "passed",
+    "helper_exit_code": 0,
+    "evidence": "backend/qa/telegram-id-20261031T123621Z/result.json"
+  },
+  "real_telegram_login": {
+    "status": "passed",
+    "recorded_at_utc": "2026-10-31T17:43:55.494551+05:00",
+    "simulation": false,
+    "method": "Real Telegram authorization; user confirmed Projects page; read-only database verification",
+    "user_confirmed_projects_page": true,
+    "database_verification": {
+      "telegram_issuer_users": 2,
+      "active_sessions": 2,
+      "latest_session_created_at_utc": "2026-10-31T17:38:33.450147+05:00",
+      "two_team_members_verified": false
+    },
+    "origin": "https://pqqtg-81-90-20-78.run.pinggy-free.link",
+    "callback": "https://pqqtg-81-90-20-78.run.pinggy-free.link/api/v1/auth/telegram/callback",
+    "temporary_tunnel_expires_approximately_utc": "2026-10-31T13:10:18Z",
+    "persistent_deployment": false,
+    "independent_cross_user_acceptance": "pending",
+    "personal_data_and_tokens_recorded": false
+  },
+  "latest_frontend_verification": {
+    "recorded_on": "2026-11-01",
+    "updated_at_utc": "2026-10-31T20:50:15Z",
+    "issue": "Pinggy browser screening HTML replaced API JSON during project creation",
+    "project_created_during_failed_attempt": false,
+    "fix": "Add documented X-Pinggy-No-Screen header only for recognized Pinggy tunnel hostnames",
+    "files": [
+      "frontend/assets/api.js",
+      "frontend/tests/api.test.js"
+    ],
+    "frontend_node_tests": {
+      "skipped": 0,
+      "passed": 26,
+      "failed": 0
+    },
+    "frontend_http_tests": {
+      "failed": 0,
+      "passed": 8
+    },
+    "csrf_preserved": true,
+    "cookies_same_origin_preserved": true,
+    "if_match_preserved": true,
+    "post_automatically_retried": false,
+    "deployed": true,
+    "actual_served_asset_verified": true,
+    "origin": "https://azmcc-81-90-20-56.run.pinggy-free.link",
+    "callback": "https://azmcc-81-90-20-56.run.pinggy-free.link/api/v1/auth/telegram/callback",
+    "current_real_browser_smoke": "Passed core public Chrome scenario; see PUBLIC_BROWSER_VERIFICATION.json",
+    "team_cross_user_acceptance": "core_scenario_passed; full_AC_acceptance_pending",
+    "git_publication": false,
+    "approval_review": "Previous usage-limit review failure resolved on resumed turn; current Docker/tunnel actions approved and completed"
+  },
+  "current_browser_smoke": {
+    "status": "passed_local_desktop_copy_checks",
+    "real_public_core_flow": "Passed before this copy revision; not repeated after it",
+    "real_public_evidence": "PUBLIC_BROWSER_VERIFICATION.json",
+    "current_visual_evidence": "UI_COPY_VERIFICATION.json",
+    "authenticated_visual_views": "synthetic_fixture_only",
+    "origin_status": "disconnected_temporary_tunnel"
+  },
+  "session_recovery_verification": {
+    "recorded_on": "2026-11-01",
+    "verified_at_utc": "2026-10-31T23:14:18Z",
+    "frontend_node_tests_passed": 31,
+    "frontend_node_failures": 0,
+    "targeted_session_recovery_cases": 5,
+    "syntax_check": "passed",
+    "deployed": true,
+    "image_id": "sha256:49575f9a510d0294dbb79ffe0e2dd30f0df001357cd670a26a6f114eb7965c13",
+    "browser_smoke": "passed_with_synthetic_fixture_session; no task created after 401",
+    "files": [
+      "frontend/assets/app.js",
+      "frontend/tests/app-flows.test.js"
+    ],
+    "post_retry": false
+  },
+  "synthetic_browser_qa": {
+    "recorded_on": "2026-11-01",
+    "completed_at_utc": "2026-11-01T11:12:50.617036+00:00",
+    "browser": "built-in browser",
+    "status": "passed",
+    "passed": 7,
+    "failed": 0,
+    "identities": "synthetic QA fixtures",
+    "database": "isolated SQLite only",
+    "production_database_touched": false,
+    "real_telegram_login_in_this_run": false,
+    "independent_team_acceptance": false,
+    "checks": [
+      "Create project and verify persisted fields after reload",
+      "Create task, assign self, start and reload board",
+      "Create invitation and verify public preview",
+      "Join as another synthetic user",
+      "Assign synthetic student and start task as student",
+      "Revoke invitation and verify unavailable preview",
+      "Expire only synthetic lead session while task form is open; submit requires login and creates no task"
+    ],
+    "evidence_in_workspace": "eduproject_lab2_plan/ui_smoke_20261101/result.json",
+    "fixture_harness": "frontend/tests/UI_FIXTURE_README.md",
+    "not_exercised": [
+      "independent real-team acceptance",
+      "real Telegram auth in this UI run",
+      "mobile and full keyboard manual acceptance",
+      "manual stale-ETag conflict",
+      "manual pagination over 100 tasks",
+      "production deployment and CI"
+    ]
+  },
+  "final_frontend_verification": {
+    "recorded_on": "2026-11-01",
+    "completed_at_utc": "2026-11-01T18:02:52.513Z",
+    "node_passed": 31,
+    "http_passed": 8,
+    "syntax_passed": 2,
+    "failures": 0,
+    "backend_suite_rerun": false
+  },
+  "current_local_http_checks": {
+    "recorded_at_utc": "2026-11-01T18:07:18.389947+00:00",
+    "health_live": 200,
+    "health_ready": 200
+  },
+  "historical_pinggy_browser_smoke_20261101": {
+    "status": "blocked_external_tunnel",
+    "recorded_on": "2026-11-01",
+    "reason": "Public Pinggy browser requests encountered ERR_SSL_PROTOCOL_ERROR; the temporary origin has since expired. Local business UI was tested separately with explicit synthetic identities.",
+    "origin": "https://hueli-81-90-20-79.run.pinggy-free.link",
+    "origin_status": "expired_temporary_tunnel",
+    "independent_cross_user_acceptance": "pending",
+    "previous_real_telegram_login_evidence": "2026-10-31, previous temporary origin"
+  },
+  "real_public_browser_qa": {
+    "source": "PUBLIC_BROWSER_VERIFICATION.json",
+    "status": "passed_core_flow_with_pending_checks",
+    "passed": 7,
+    "blocked": 1,
+    "failed": 0,
+    "active_member_role_counts": {
+      "lead": 1,
+      "student": 2
+    },
+    "task_status_counts": {
+      "in_progress": 2
+    },
+    "invitations": {
+      "total": 2,
+      "active": 1,
+      "revoked": 1,
+      "expired": 0,
+      "has_student_invitation": true
+    },
+    "public_url_currently_available": false,
+    "application_code_changed": false
+  },
+  "browser_smoke_before_ui_copy_revision": {
+    "status": "passed_core_flow_with_pending_checks",
+    "recorded_on": "2026-11-01",
+    "browser": "Google Chrome",
+    "origin": "https://2ctzfj-ip-81-90-20-56.tunnelmole.net",
+    "origin_status": "disconnected_temporary_tunnel_at_later_22_18_check",
+    "real_telegram_login": true,
+    "synthetic_authentication": false,
+    "active_members": 3,
+    "tasks_in_progress": 2,
+    "core_cross_user_scenario": "passed",
+    "full_independent_AC_acceptance": "pending",
+    "evidence": "PUBLIC_BROWSER_VERIFICATION.json"
+  },
+  "ui_copy_revision": {
+    "status": "passed_local_checks_and_deployed",
+    "source": "UI_COPY_VERIFICATION.json"
+  }
+}

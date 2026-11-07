@@ -1,0 +1,211 @@
+{
+  "id": "REAL-PUBLIC-CHROME-20261101",
+  "recorded_at_utc": "2026-11-01T17:21:06.789085+00:00",
+  "recorded_on": "2026-11-01",
+  "timezone": "Asia/Yekaterinburg",
+  "browser": "Google Chrome, connected official extension",
+  "environment": "Public HTTPS Tunnelmole to the production-configured local Docker application and PostgreSQL 17",
+  "origin": "https://2ctzfj-ip-81-90-20-56.tunnelmole.net",
+  "public_url_status_at_recording": "disconnected_temporary_tunnel",
+  "public_url_last_check_local": "2026-11-01T22:18:00+05:00",
+  "public_url_last_check_evidence": "New Chrome navigation displayed provider text: No matching tunnelmole domain",
+  "status": "passed_core_flow_with_pending_checks",
+  "passed": 7,
+  "failed": 0,
+  "blocked": 1,
+  "real_telegram_login": true,
+  "synthetic_authentication": false,
+  "synthetic_business_responses": false,
+  "test_data": "Explicitly named test project and tasks; real authenticated participants",
+  "authentication_path": "Normal production Telegram login and application forms; no QA-login route",
+  "production_database_modified": "Only normal application UI operations in the named test project",
+  "database_verification_read_only": true,
+  "source_commit": null,
+  "deployed_image_id": "sha256:1ebbe67ab90a3598a4fd367e86ad262f7ed3ad24d905ee1a7d31abac0f4d8074",
+  "checks": [
+    {
+      "case_id": "PUBLIC-01",
+      "expected": "Real Telegram sign-in opens Projects in Chrome",
+      "actual": "Chrome authenticated UI; user completed Telegram authorization",
+      "status": "passed",
+      "screenshots": [
+        "chrome-authenticated-projects.jpg"
+      ]
+    },
+    {
+      "case_id": "PUBLIC-02",
+      "expected": "Create a project and retain all fields after reload",
+      "actual": "Chrome UI and persisted PostgreSQL project",
+      "status": "passed",
+      "screenshots": [
+        "chrome-project-persisted.jpg"
+      ]
+    },
+    {
+      "case_id": "PUBLIC-03",
+      "expected": "Create, self-assign and start a task; reload preserves it",
+      "actual": "Chrome UI and PostgreSQL task status/version",
+      "status": "passed",
+      "screenshots": [
+        "chrome-task-started.jpg",
+        "chrome-board-persisted.jpg"
+      ]
+    },
+    {
+      "case_id": "PUBLIC-04",
+      "expected": "Create and copy an active student invitation",
+      "actual": "Chrome copy-success UI; invitation later used by real participants",
+      "status": "passed",
+      "screenshots": [
+        "chrome-active-invitation.jpg"
+      ]
+    },
+    {
+      "case_id": "PUBLIC-05",
+      "expected": "Real participants join through the invitation",
+      "actual": "Owner reported joining; Chrome team list and PostgreSQL confirm lead 1/student 2",
+      "status": "passed",
+      "screenshots": [
+        "chrome-two-real-members.jpg",
+        "chrome-invitation-revoked.jpg"
+      ]
+    },
+    {
+      "case_id": "PUBLIC-06",
+      "expected": "Assign a student task; student starts it; lead sees the change",
+      "actual": "Owner reported student action; lead Chrome board and PostgreSQL confirm in_progress",
+      "status": "passed",
+      "screenshots": [
+        "chrome-student-task-assigned.jpg",
+        "chrome-two-tasks-in-progress.jpg"
+      ]
+    },
+    {
+      "case_id": "PUBLIC-07",
+      "expected": "Revoke a separate disposable invitation while retaining the original",
+      "actual": "Chrome displays one active and one revoked invitation; PostgreSQL agrees",
+      "status": "passed",
+      "screenshots": [
+        "chrome-invitation-revoked.jpg"
+      ]
+    },
+    {
+      "case_id": "PUBLIC-08",
+      "expected": "Opening the revoked invitation shows an unavailable-invitation message",
+      "actual": "No successful public-browser observation recorded; at 22:18 local the provider returned No matching tunnelmole domain",
+      "status": "blocked_external_tunnel",
+      "screenshots": []
+    }
+  ],
+  "database_snapshot": {
+    "recorded_at_utc": "2026-11-01T17:18:22.385409+00:00",
+    "phase": "final_public_browser_qa_snapshot",
+    "environment": "production PostgreSQL",
+    "read_only": true,
+    "snapshot_isolation": "repeatable_read",
+    "scope": "Only the explicitly named production QA project; no person name, Telegram identity, cookie, authorization code, token or hash fields selected",
+    "project": {
+      "id": "9b42ae30-83b3-4a31-9d00-676f72a9b3d9",
+      "title": "ТЕСТ — публичная проверка Sprint 1 (01.11.2026)",
+      "description": "Тестовый проект для проверки EduProject через публичный HTTPS-адрес. Учебные данные.",
+      "goal": "Проверить создание проекта, работу с задачами и приглашение участника через интернет.",
+      "expected_result": "Проект и задача сохраняются после обновления страницы; ссылка приглашения открывается.",
+      "due_at": "2026-11-07 13:00:00+00:00",
+      "status": "active",
+      "version": 1,
+      "created_at": "2026-11-01 12:33:20.439151+00:00",
+      "updated_at": "2026-11-01 12:33:20.439157+00:00"
+    },
+    "members": [
+      {
+        "role": "lead",
+        "active": true,
+        "count": 1
+      },
+      {
+        "role": "student",
+        "active": true,
+        "count": 2
+      }
+    ],
+    "active_member_count": 3,
+    "active_member_role_counts": {
+      "lead": 1,
+      "student": 2
+    },
+    "tasks": [
+      {
+        "title": "ТЕСТ — создание и начало задачи через интернет",
+        "description": "Проверка сохранения задачи, назначения исполнителя и перехода в работу на публичном сервере.",
+        "expected_result": "Задача назначена текущему тимлиду и остаётся в колонке «В работе» после обновления страницы.",
+        "due_at": "2026-11-04 13:00:00+00:00",
+        "priority": "high",
+        "status": "in_progress",
+        "version": 3,
+        "assigned": true,
+        "assignee_role": "lead",
+        "assignee_active": true
+      },
+      {
+        "title": "ТЕСТ — задача приглашённого участника",
+        "description": "Приглашённый участник проверяет доступ к своей задаче и начинает её выполнение через публичный сайт.",
+        "expected_result": "Участник видит назначение и переводит задачу в колонку «В работе».",
+        "due_at": "2026-11-04 13:00:00+00:00",
+        "priority": "medium",
+        "status": "in_progress",
+        "version": 3,
+        "assigned": true,
+        "assignee_role": "student",
+        "assignee_active": true
+      }
+    ],
+    "task_count": 2,
+    "task_status_counts": {
+      "in_progress": 2
+    },
+    "invitations": {
+      "total": 2,
+      "active": 1,
+      "revoked": 1,
+      "expired": 0,
+      "has_student_invitation": true
+    },
+    "audit_event_counts": {
+      "invitation.created": 2,
+      "invitation.revoked": 1,
+      "member.joined": 2,
+      "project.created": 1,
+      "task.assignee_changed": 2,
+      "task.created": 2,
+      "task.started": 2
+    },
+    "real_browser_observations": "Recorded separately by root; this check verifies persisted data only",
+    "person_identities_checked": false
+  },
+  "evidence_directory_in_workspace": "eduproject_lab2_plan/public_browser_20261101",
+  "local_health": {
+    "checked_at_utc": "2026-11-01T17:19:29+00:00",
+    "live": 200,
+    "ready": 200,
+    "app": "running_healthy",
+    "db": "running_healthy"
+  },
+  "not_exercised": [
+    "Public browser opening of the revoked invitation after revocation",
+    "Independent acceptance of every selected Jira AC",
+    "Real-session logout and subsequent sign-in during this public QA run",
+    "Manual mobile layout and full keyboard/focus acceptance",
+    "Manual stale ETag conflict in two windows",
+    "Manual pagination with more than 100 tasks",
+    "Fresh-machine setup and restart without data loss",
+    "Permanent deployment and GitHub CI/CD"
+  ],
+  "publication": {
+    "commit": false,
+    "push": false,
+    "ci": false
+  },
+  "jira_changed": false,
+  "application_code_changed_in_this_public_run": false,
+  "credentials_cookies_auth_parameters_or_invitation_tokens_recorded": false
+}
