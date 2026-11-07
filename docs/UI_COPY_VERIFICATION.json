@@ -1,0 +1,137 @@
+{
+  "id": "UI-COPY-20261101",
+  "recorded_at_utc": "2026-11-01T18:08:56.699126+00:00",
+  "timezone": "Asia/Yekaterinburg",
+  "scope": "UI wording, redundant labels and account-role placement",
+  "status": "passed_local_checks_and_deployed",
+  "changes": [
+    "Remove decorative slogans, repeated headings, empty captions, top bar and footer copy",
+    "Place the current project role below the account name; preserve roles on individual project cards and the team list",
+    "Shorten and unify actions, form labels, placeholders, validation, loading and notification text",
+    "Keep actionable error reasons and one-time invitation-link warning",
+    "Show assignee once in task details and avoid a misleading start restriction in a closed project"
+  ],
+  "terminology_references": [
+    "https://yandex.ru/support/tracker/ru/user/create-ticket",
+    "https://www.yandex.ru/support/tracker/ru/quick-start/work-on-issue/get-started"
+  ],
+  "automated": {
+    "completed_at_utc": "2026-11-01T18:02:52.513Z",
+    "node_passed": 31,
+    "http_passed": 8,
+    "syntax_passed": 2,
+    "failures": 0,
+    "backend_suite_rerun": false
+  },
+  "visual": {
+    "browser": "Google Chrome",
+    "status": "passed_desktop_copy_and_forms",
+    "live_login": "Updated production-configured application at http://localhost:8000/login",
+    "authenticated_views": "Isolated local QA fixture, explicitly synthetic users and SQLite; production authentication unchanged",
+    "checked": [
+      "Login heading, Telegram action and automatic-registration note",
+      "Empty projects: one create button and no invented global role",
+      "Project creation form, required-field messages and successful submit",
+      "Board: no slogans, no role badges outside account, concise empty columns",
+      "Team list: no missing-group placeholder; short invitation labels and one-time-link warning",
+      "Project overview: Description, Goal and Expected result headings",
+      "Task form and detail: one assignee field; assign and start work preserve behaviour",
+      "Anonymous invitation says Sign in with Telegram; authenticated invitation requires explicit Join",
+      "Synthetic student joins and account displays Member; lead account displays Lead"
+    ],
+    "screenshots_in_workspace": [
+      "login-live.png",
+      "board-desktop.png",
+      "overview-desktop.png",
+      "team-desktop.png",
+      "task-form.png",
+      "task-detail.png",
+      "invitation-anonymous.png",
+      "student-role.png"
+    ],
+    "responsive_check": {
+      "status": "not_verified",
+      "reason": "Chrome viewport override requested 390x844 but DOM width remained 1585; override reset. No mobile success claimed."
+    },
+    "full_keyboard_or_all_AC_acceptance": "not_exercised",
+    "real_telegram_or_public_https_retested_after_copy_revision": false
+  },
+  "runtime": {
+    "recorded_at_utc": "2026-11-01T18:07:18.389947+00:00",
+    "timezone": "Asia/Yekaterinburg",
+    "status": "passed",
+    "scope": "Read-only local Docker and served frontend byte verification; no restart or environment changes",
+    "origin": "http://127.0.0.1:8000",
+    "image_id": "sha256:a36568a6ee537653f14807dd4125ebb76f5737671442da8e80b7168f0e72fb8c",
+    "services": [
+      {
+        "service": "app",
+        "state": "running",
+        "health": "healthy",
+        "image_name": "eduproject-app"
+      },
+      {
+        "service": "db",
+        "state": "running",
+        "health": "healthy",
+        "image_name": "postgres:17-alpine"
+      }
+    ],
+    "http_checks": {
+      "/health/live": {
+        "http_status": 200,
+        "body": {
+          "status": "ok"
+        }
+      },
+      "/health/ready": {
+        "http_status": 200,
+        "body": {
+          "status": "ready"
+        }
+      }
+    },
+    "assets": [
+      {
+        "path": "/assets/app.js",
+        "http_status": 200,
+        "source": "frontend/assets/app.js",
+        "source_sha256": "a1357118eee64c1ed81c05379a81f7a7d3193eb2bdd101e99de2b7dbfdd64073",
+        "served_sha256": "a1357118eee64c1ed81c05379a81f7a7d3193eb2bdd101e99de2b7dbfdd64073",
+        "matches_source": true
+      },
+      {
+        "path": "/assets/api.js",
+        "http_status": 200,
+        "source": "frontend/assets/api.js",
+        "source_sha256": "05bb17a34a9930b4ee0d8f5d7646149c5f6e1e2633a7653d9fdc9c6ec986601d",
+        "served_sha256": "05bb17a34a9930b4ee0d8f5d7646149c5f6e1e2633a7653d9fdc9c6ec986601d",
+        "matches_source": true
+      },
+      {
+        "path": "/assets/app.css",
+        "http_status": 200,
+        "source": "frontend/assets/app.css",
+        "source_sha256": "dd2a3f60efdd6460d265e53968965c0e367b2f1400e362ba8d3ebd6f0ea41a90",
+        "served_sha256": "dd2a3f60efdd6460d265e53968965c0e367b2f1400e362ba8d3ebd6f0ea41a90",
+        "matches_source": true
+      },
+      {
+        "path": "/login",
+        "http_status": 200,
+        "source": "frontend/index.html",
+        "source_sha256": "78d45eab5e50fb9abca91e66bd1dd976f667723a96ca8987220c97b5db61b2fe",
+        "served_sha256": "78d45eab5e50fb9abca91e66bd1dd976f667723a96ca8987220c97b5db61b2fe",
+        "matches_source": true
+      }
+    ],
+    "real_telegram_login_exercised": false,
+    "credentials_or_tokens_recorded": false
+  },
+  "jira_modified": false,
+  "publication": {
+    "commit": false,
+    "push": false,
+    "ci": false
+  }
+}
