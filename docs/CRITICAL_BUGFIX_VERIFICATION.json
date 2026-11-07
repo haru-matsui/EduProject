@@ -1,0 +1,179 @@
+{
+  "project": "EduProject",
+  "sprint": 1,
+  "defect_id": "OIDC-DECIMAL-PROFILE-ID",
+  "recorded_on": "2026-11-02",
+  "timezone": "Asia/Yekaterinburg",
+  "recorded_at_utc": "2026-11-02T17:50:23.256858+00:00",
+  "status": "technical_materials_prepared_team_exercise_pending",
+  "title": "Отказ при входе с числовым идентификатором Telegram в строковом формате",
+  "historical_event_on": "2026-10-31",
+  "impact": "Пользователь с корректным подписанным ответом, содержащим строковый profile id, получал ошибку входа вместо сессии приложения",
+  "cause": "Проверка допустимости profile id принимала целое число, но отклоняла его каноническое десятичное строковое представление",
+  "fix": "Каноническая строка из ASCII-цифр преобразуется в int до проверки положительного диапазона signed BIGINT. Идентичность issuer/sub и проверки подписи, claims, state, nonce и привязки браузера сохраняются",
+  "separate_configuration_issue": "Ранее наблюдавшийся invalid_client был отдельной ошибкой настройки Client Secret и не является предметом этого технического разбора",
+  "historical_evidence": {
+    "recorded_on": "2026-10-31",
+    "diagnosis_source": "eduproject_lab2_plan/telegram_login_diagnosis_2026-10-31.json",
+    "reported_profile_failure": "Telegram signed token passed cryptographic checks; callback rejected profile id format (invalid_telegram_id)",
+    "reported_fix": "Normalize canonical ASCII decimal profile id strings into signed BIGINT range; preserve issuer/sub identity and all signature/state/nonce checks",
+    "historical_backend_tests": {
+      "tests": 97,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 97
+    },
+    "historical_postgresql_exercised": true,
+    "historical_test_started_at_utc": "2026-10-31T12:36:24.096996+00:00",
+    "historical_test_finished_at_utc": "2026-10-31T12:36:43.720956+00:00",
+    "historical_backend_source": "EduProject_App/backend/qa/telegram-id-20261031T123621Z/result.json",
+    "historical_real_login": {
+      "status": "passed",
+      "recorded_at_utc": "2026-10-31T12:43:55.494551+00:00",
+      "simulation": false
+    },
+    "interpretation": "Historical evidence retained as a separately dated report; no claim that those full tests or real login were rerun today"
+  },
+  "fresh_controlled_reproduction": {
+    "started_at_utc": "2026-11-02T17:48:23.533296+00:00",
+    "finished_at_utc": "2026-11-02T17:48:24.153110+00:00",
+    "status": "passed",
+    "control_cases": 4,
+    "model_failure_reproduced": true,
+    "historical_binary_reproduced": false,
+    "legacy_variant": "Current validator compiled in memory with only the decimal-string normalization block removed; model of the documented previous type-check behaviour",
+    "current_variant": "Imported unmodified production TelegramOIDC class",
+    "inputs": "Synthetic signed RS256 JWT, generated test key, httpx.MockTransport for token/JWKS, separate SQLite for every case",
+    "network_requests_to_real_provider": false,
+    "real_telegram_login": false,
+    "observations": [
+      {
+        "case": "restored_typecheck_string_id",
+        "synthetic_profile_id_representation": "string",
+        "callback_status": 303,
+        "callback_target": "/login?error=authorization_failed",
+        "session_status": 401,
+        "user_count": 0,
+        "session_count": 0,
+        "stored_profile_id_type": null,
+        "stored_id_matches_fixture": null,
+        "issuer_sub_identity_preserved": null,
+        "safe_rejection_reason": "invalid_telegram_id",
+        "provider_exchanges": 1
+      },
+      {
+        "case": "current_validator_string_id",
+        "synthetic_profile_id_representation": "string",
+        "callback_status": 303,
+        "callback_target": "/projects",
+        "session_status": 200,
+        "user_count": 1,
+        "session_count": 1,
+        "stored_profile_id_type": "int",
+        "stored_id_matches_fixture": true,
+        "issuer_sub_identity_preserved": true,
+        "safe_rejection_reason": null,
+        "provider_exchanges": 1
+      },
+      {
+        "case": "restored_typecheck_integer_id",
+        "synthetic_profile_id_representation": "integer",
+        "callback_status": 303,
+        "callback_target": "/projects",
+        "session_status": 200,
+        "user_count": 1,
+        "session_count": 1,
+        "stored_profile_id_type": "int",
+        "stored_id_matches_fixture": true,
+        "issuer_sub_identity_preserved": true,
+        "safe_rejection_reason": null,
+        "provider_exchanges": 1
+      },
+      {
+        "case": "current_validator_integer_id",
+        "synthetic_profile_id_representation": "integer",
+        "callback_status": 303,
+        "callback_target": "/projects",
+        "session_status": 200,
+        "user_count": 1,
+        "session_count": 1,
+        "stored_profile_id_type": "int",
+        "stored_id_matches_fixture": true,
+        "issuer_sub_identity_preserved": true,
+        "safe_rejection_reason": null,
+        "provider_exchanges": 1
+      }
+    ],
+    "production_database_touched": false,
+    "product_files_rewritten": false,
+    "credentials_tokens_state_nonce_or_person_identity_recorded": false
+  },
+  "fresh_regression": {
+    "started_at_utc": "2026-11-02T17:48:24.155109+00:00",
+    "finished_at_utc": "2026-11-02T17:48:33.825645+00:00",
+    "status": "passed",
+    "exit_code": 0,
+    "counts": {
+      "tests": 53,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 53
+    },
+    "test_file": "EduProject_App/backend/tests/test_oidc.py",
+    "provider": "Signed test JWT plus mocked official token/JWKS endpoints; offline",
+    "database": "Isolated temporary SQLite per case",
+    "postgresql_exercised": false,
+    "real_provider_exercised": false,
+    "junit": "oidc-regression.xml",
+    "stdout": "oidc-regression.log",
+    "test_groups": {
+      "test_browser_binding_state_expiry_cancel_and_single_use": 1,
+      "test_decimal_telegram_id_is_normalized_before_persisting_user": 3,
+      "test_http_200_oauth_errors_are_classified_without_logging_payload": 5,
+      "test_invalid_claims_never_mint_session": 8,
+      "test_invalid_telegram_id_representation_never_creates_identity": 19,
+      "test_invitation_return_path_kept_server_side_and_validation_hides_secrets": 1,
+      "test_missing_browser_binding_logs_reason_before_provider_exchange": 1,
+      "test_missing_nonce_logs_safe_reason_without_creating_session": 1,
+      "test_no_open_redirect": 7,
+      "test_optional_telegram_id_can_remain_absent": 2,
+      "test_provider_failures_log_only_safe_diagnostics": 3,
+      "test_real_signature_jwks_pkce_session_rotation_and_user_upsert": 1,
+      "test_wrong_signature_rejected": 1
+    }
+  },
+  "source_sha256": {
+    "EduProject_App/backend/app/oidc.py": "66217c696eb7877752a5c430aceb081a4830d3bc31e604fc6df5a73081261d45",
+    "EduProject_App/backend/app/auth.py": "337d571030d05518ae4901e32c540f40ebeaf9b3010734e68218d8fffbc136bd",
+    "EduProject_App/backend/app/models.py": "ed3b87914a5f46bf4b8cac41772d7ce7e8ab5d2d5bf7cc6a1ac6cd3d524acb8e",
+    "EduProject_App/backend/app/config.py": "8758a3f5e092d4064c02574ead54399a78cc05a00c15f78598cec225d8dd1159",
+    "EduProject_App/backend/tests/test_oidc.py": "acbc669e8695aecaaf5b8738ba50991d78712ab4428accc6bfc9f2a7f91e3f9b",
+    "EduProject_App/backend/tests/conftest.py": "41812ba4e5d79d96f56f40aaa19ce78cec5609b9a3548638c79a11a891e707bb"
+  },
+  "commit_sha": null,
+  "limitations": [
+    "Контрольный вариант собран в памяти из текущего кода удалением блока нормализации; историческая сборка и старый commit не восстановлены",
+    "Новые проверки используют подписанные тестовые JWT, имитацию token/JWKS и отдельные SQLite; реальный Telegram и PostgreSQL в этом запуске не проверялись",
+    "Исторические 97 backend тестов и настоящий вход относятся к 31 октября и повторным запуском 2 ноября не объявляются",
+    "Приоритет Critical, оценка, назначение, обмен объёма и независимая приёмка командой пока не подтверждены"
+  ],
+  "team_process": {
+    "status": "pending",
+    "meeting_held": false,
+    "critical_priority_confirmed_by_po": false,
+    "poker_sp": null,
+    "bug_jira_key": null,
+    "removed_sprint_issue": null,
+    "independent_retest": "pending",
+    "optional_candidate_OPT_UI_01_in_sprint": false
+  },
+  "workspace_evidence": "eduproject_lab2_plan/critical_bugfix_20261102/technical/",
+  "publication": {
+    "commit": false,
+    "push": false,
+    "ci": false
+  },
+  "jira_changed": false
+}
